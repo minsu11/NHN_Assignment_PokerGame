@@ -25,46 +25,49 @@ public class Table {
         }
     }
 
+    //    public int victory() {
+//        int victoryPeople = 0;
+//        boolean numCompare = false;
+//        boolean rankCompare = false;
+//
+//        Rank rankPeople = Rank.NOPAIR;
+//        for (int i = 0; i < this.people; i++) {
+//            if (rankPeople.getRank() < users[i].getRank().getRank()) {
+//                rankPeople = users[i].getRank();
+//                victoryPeople = i;
+//                rankCompare = false;
+//            } else if (rankPeople == users[i].getRank()) {
+//                rankCompare = true;
+//            }
+//        } // 2중
+//        if (!rankCompare) {
+//            return victoryPeople;
+//        }
+//        int cardNum = 0;
+//        for (int i = 0; i < this.people; i++) {
+//            if (rankPeople == users[i].getRank() && users[i].getRankCard().size() > 0 && cardNum < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && rankPeople != Rank.TWOPAIR) {
+//                cardNum = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber();
+//                victoryPeople = i;
+//                numCompare = false;
+//            }
+//
+//        }// 3중
+//        if (!numCompare) {
+//            return victoryPeople;
+//        }
+//        Suit suit = Suit.C;
+//        for (int i = 0; i < this.people; i++) {
+//            if (rankPeople == users[i].getRank() && cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && users[i].getRankCard().size() > 0 && suit.getNumber() < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber()) {
+//                suit = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit();
+//                victoryPeople = i;
+//
+//            }
+//        }
+//
+//        return victoryPeople;
+//    }
     public int victory() {
-        int victoryPeople = 0;
-        boolean numCompare = false;
-        boolean rankCompare = false;
-
-        Rank rankPeople = Rank.NOPAIR;
-        for (int i = 0; i < this.people; i++) {
-            if (rankPeople.getRank() < users[i].getRank().getRank()) {
-                rankPeople = users[i].getRank();
-                victoryPeople = i;
-                rankCompare = false;
-            } else if (rankPeople == users[i].getRank()) {
-                rankCompare = true;
-            }
-        } // 2중
-        if (!rankCompare) {
-            return victoryPeople;
-        }
-        int cardNum = 0;
-        for (int i = 0; i < this.people; i++) {
-            if (rankPeople == users[i].getRank() && users[i].getRankCard().size() > 0 && cardNum < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && rankPeople != Rank.TWOPAIR) {
-                cardNum = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber();
-                victoryPeople = i;
-                numCompare = false;
-            }
-
-        }// 3중
-        if (!numCompare) {
-            return victoryPeople;
-        }
-        Suit suit = Suit.C;
-        for (int i = 0; i < this.people; i++) {
-            if (rankPeople == users[i].getRank() && cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && users[i].getRankCard().size() > 0 && suit.getNumber() < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber()) {
-                suit = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit();
-                victoryPeople = i;
-
-            }
-        }
-
-        return victoryPeople;
+        return Rule.victory(this.people, users);
     }
 
     public void cardProgress() { // 유저에게 5장 카드를 나눠줌

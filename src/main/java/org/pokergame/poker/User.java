@@ -57,9 +57,6 @@ public class User {
         System.out.println(this.rankCard + "\n");
     }
 
-    public void handingOutCard() {
-        this.add(cardSetting);
-    }
 
     @Override
     public String toString() {
