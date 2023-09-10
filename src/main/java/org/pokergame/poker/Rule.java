@@ -2,6 +2,13 @@ package org.pokergame.poker;
 
 public class Rule<T> {
     private Table table;
+    private int people;
+    private boolean numCompare = false;
+    private boolean rankCompare = false;
+    private int rankNum = Rank.NOPAIR.getRank();
+    private int cardNum = 0;
+    private int suitNum = Suit.C.getNumber();
+
 
     public Rule(int people) {
         if (people < 0) {
@@ -9,6 +16,7 @@ public class Rule<T> {
         }
         this.table = new Table();
         this.table.createUser(people);
+        this.people = people;
 
     }
 
@@ -17,45 +25,57 @@ public class Rule<T> {
         return table;
     }
 
-    public int victory(int people, User[] users) {
-        int victoryPeople = 0;
-        boolean numCompare = false;
-        boolean rankCompare = false;
+    public int rankCompare(int compareNum, int idx, int self) {
+        if (rankNum < compareNum) {
+            rankNum = compareNum;
+            rankCompare = false;
+            return idx;
+        } else {
+            rankCompare = true;
+        }
+        return self;
+    }
 
-        Rank rankPeople = Rank.NOPAIR;
-        // getRank return type int
+
+    public int numCompare(int compareNum, int compareNum2, int idx, int self) {
+        if (this.rankNum == compareNum && cardNum < compareNum2) {
+            cardNum = compareNum2;
+            numCompare = false;
+            return idx;
+        } else if (cardNum == compareNum2) {
+            numCompare = true;
+        }
+
+        return self;
+    }
+
+
+    public int loopRank(User[] users) {
+
+        int result = 0;
         for (int i = 0; i < people; i++) { // parameter rank
-            if (rankPeople.getRank() < users[i].getRank().getRank()) {
-                // int < int
-                rankPeople = users[i].getRank();
-                victoryPeople = i;
-                rankCompare = false;
-            } else if (rankPeople == users[i].getRank()) {
-                rankCompare = true;
-            }
-        } // 2중
+            result = numCompare(rankNum, users[i].getRank().getRank(), i, result);
+        }
+        return result;
+    }
+
+
+    public int victory(User[] users) {
+        int victoryPeople = loopRank(users);
         if (!rankCompare) {
             return victoryPeople;
         }
-        int cardNum = 0;
         for (int i = 0; i < people; i++) { // parameter rank, User
-            if (rankPeople == users[i].getRank() && users[i].getRankCard().size() > 0 && cardNum < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && rankPeople != Rank.TWOPAIR) {
-                cardNum = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber();
-                victoryPeople = i;
-                numCompare = false;
-            } else if (cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber()) {
-                numCompare = true;
-            }
+            victoryPeople = numCompare(users[i].getRank().getRank(),
+                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber(), i, victoryPeople);
 
         }// 3중
         if (!numCompare) {
             return victoryPeople;
         }
-        Suit suit = Suit.C;
-
         for (int i = 0; i < people; i++) {
-            if (rankPeople == users[i].getRank() && cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && users[i].getRankCard().size() > 0 && suit.getNumber() < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber()) {
-                suit = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit();
+            if (this.rankNum == users[i].getRank().getRank() && cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && users[i].getRankCard().size() > 0 && suitNum < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber()) {
+                suitNum = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber();
                 victoryPeople = i;
 
             }

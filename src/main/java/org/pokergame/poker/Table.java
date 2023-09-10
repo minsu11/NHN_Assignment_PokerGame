@@ -29,11 +29,6 @@ public class Table {
         }
     }
 
-
-//    public int victory() {
-//        return rule.victory(this.people, users);
-//    }
-
     public void cardProgress() { // 유저에게 5장 카드를 나눠줌
         for (int i = 0; i < 5; i++) {
             userTurn();
