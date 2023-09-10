@@ -19,6 +19,7 @@ public class User {
         return rank;
     }
 
+
     public List<Card> getRankCard() {
         return rankCard;
     }
@@ -31,6 +32,12 @@ public class User {
         handCard.add(cardSetting.getCardList().get(0));
         cardSetting.delete();
 
+    }
+
+    @Override
+    public String toString() {
+        return "handCard=" + handCard +
+                ", rank=" + rank + "\n";
     }
 
     public void rankCheck() {
@@ -57,13 +64,6 @@ public class User {
         System.out.println(this.rankCard + "\n");
     }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "cardList=" + handCard +
-                '}';
-    }
 
     public void sort() {
         Collections.sort(handCard);

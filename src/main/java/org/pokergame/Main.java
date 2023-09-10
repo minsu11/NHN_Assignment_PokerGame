@@ -10,11 +10,10 @@ public class Main {
         for (int k = 0; k < 100; k++) {
             Game game = new Game(4);
             game.start();
-
             for (int i = 0; i < 4; i++) {
-                System.out.println(game.getTable().getUsers(i).getHandCard());
-
+                System.out.println(game.getRule().getTable().getUser(i));
             }
+
             System.out.println("\n\n");
         }
 //        User user = new User();

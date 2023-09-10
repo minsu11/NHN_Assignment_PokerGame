@@ -1,7 +1,23 @@
 package org.pokergame.poker;
 
-public class Rule {
-    public static int victory(int people, User[] users) {
+public class Rule<T> {
+    private Table table;
+
+    public Rule(int people) {
+        if (people < 0) {
+            throw new IllegalArgumentException("음수가 입력되었습니다.");
+        }
+        this.table = new Table(people);
+        this.table.createUser(people);
+
+    }
+
+
+    public Table getTable() {
+        return table;
+    }
+
+    public int victory(int people, User[] users) {
         int victoryPeople = 0;
         boolean numCompare = false;
         boolean rankCompare = false;
@@ -10,6 +26,7 @@ public class Rule {
         // getRank return type int
         for (int i = 0; i < people; i++) { // parameter rank
             if (rankPeople.getRank() < users[i].getRank().getRank()) {
+                // int < int
                 rankPeople = users[i].getRank();
                 victoryPeople = i;
                 rankCompare = false;
@@ -35,6 +52,7 @@ public class Rule {
             return victoryPeople;
         }
         Suit suit = Suit.C;
+
         for (int i = 0; i < people; i++) {
             if (rankPeople == users[i].getRank() && cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && users[i].getRankCard().size() > 0 && suit.getNumber() < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber()) {
                 suit = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit();
@@ -46,5 +64,8 @@ public class Rule {
         return victoryPeople;
     }
 
-   
+    @Override
+    public String toString() {
+        return "" + table;
+    }
 }
