@@ -7,7 +7,7 @@ public class Rule<T> {
         if (people < 0) {
             throw new IllegalArgumentException("음수가 입력되었습니다.");
         }
-        this.table = new Table(people);
+        this.table = new Table();
         this.table.createUser(people);
 
     }

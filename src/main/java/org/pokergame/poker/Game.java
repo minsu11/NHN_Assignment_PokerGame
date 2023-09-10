@@ -6,6 +6,9 @@ public class Game {
     private int num;
 
     public Game(int num) {
+        if (num < 0) {
+            throw new IllegalArgumentException("음수가 입력되었습니다.");
+        }
         this.rule = new Rule(num);
         this.num = num;
     }
