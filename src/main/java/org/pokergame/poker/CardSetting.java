@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// 셔플된 카드만 준비
 public class CardSetting {
     private List<Card> cardList = new ArrayList<>();
 
@@ -12,7 +13,7 @@ public class CardSetting {
         fillCard(Suit.H);
         fillCard(Suit.D);
         fillCard(Suit.C);
-        
+
         Collections.shuffle(cardList);
     }
 

@@ -2,13 +2,12 @@ package org.pokergame.poker;
 
 public class Rule<T> {
     private Table table;
-    private int people;
+    private int victoryPeople = 0;
     private boolean numCompare = false;
     private boolean rankCompare = false;
     private int rankNum = Rank.NOPAIR.getRank();
     private int cardNum = 0;
     private int suitNum = Suit.C.getNumber();
-
 
     public Rule(int people) {
         if (people < 0) {
@@ -16,76 +15,71 @@ public class Rule<T> {
         }
         this.table = new Table();
         this.table.createUser(people);
-        this.people = people;
-
     }
-
 
     public Table getTable() {
         return table;
-    }
-
-    public int rankCompare(int compareNum, int idx, int self) {
-        if (rankNum < compareNum) {
-            rankNum = compareNum;
-            rankCompare = false;
-            return idx;
-        } else {
-            rankCompare = true;
-        }
-        return self;
-    }
-
-
-    public int numCompare(int compareNum, int compareNum2, int idx, int self) {
-        if (this.rankNum == compareNum && cardNum < compareNum2) {
-            cardNum = compareNum2;
-            numCompare = false;
-            return idx;
-        } else if (cardNum == compareNum2) {
-            numCompare = true;
-        }
-
-        return self;
-    }
-
-
-    public int loopRank(User[] users) {
-
-        int result = 0;
-        for (int i = 0; i < people; i++) { // parameter rank
-            result = numCompare(rankNum, users[i].getRank().getRank(), i, result);
-        }
-        return result;
-    }
-
-
-    public int victory(User[] users) {
-        int victoryPeople = loopRank(users);
-        if (!rankCompare) {
-            return victoryPeople;
-        }
-        for (int i = 0; i < people; i++) { // parameter rank, User
-            victoryPeople = numCompare(users[i].getRank().getRank(),
-                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber(), i, victoryPeople);
-
-        }// 3중
-        if (!numCompare) {
-            return victoryPeople;
-        }
-        for (int i = 0; i < people; i++) {
-            if (this.rankNum == users[i].getRank().getRank() && cardNum == users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber() && users[i].getRankCard().size() > 0 && suitNum < users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber()) {
-                suitNum = users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber();
-                victoryPeople = i;
-
-            }
-        }
-
-        return victoryPeople;
     }
 
     @Override
     public String toString() {
         return "" + table;
     }
+    
+    public int compare(int compareNum1, int compareNum2, int compareNum3, int idx, int self, int num) {
+        if (this.rankNum == compareNum1 && cardNum == compareNum2 && suitNum < compareNum3) {
+            compareBoolean(num, compareNum3, false);
+            return idx;
+        } else if (this.suitNum == compareNum3) {
+            compareBoolean(num, this.suitNum, true);
+        }
+        return self;
+    }
+
+    public void loopRank(User[] users) {
+        for (int i = 0; i < users.length; i++) { // parameter rank
+            this.victoryPeople = compare(rankNum, cardNum, users[i].getRank().getRank(), i, this.victoryPeople, 0);
+        }
+        this.rankNum = this.suitNum;
+        this.suitNum = Suit.C.getNumber();
+    }
+
+    public void loopCardNumber(User[] users) {
+        for (int i = 0; i < users.length; i++) { // parameter rank
+            this.victoryPeople = compare(users[i].getRank().getRank(), this.cardNum,
+                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber(), i, this.victoryPeople, 1);
+        }
+        this.cardNum = this.suitNum;
+        this.suitNum = Suit.C.getNumber();
+    }
+
+    public void loopSuitNumber(User[] users) {
+        for (int i = 0; i < users.length; i++) { // parameter rank
+            this.victoryPeople = compare(users[i].getRank().getRank(),
+                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber(), users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber(), i, this.victoryPeople, 2);
+        }
+    }
+
+    public int victory(User[] users) {
+        loopRank(users);
+        if (!rankCompare) {
+            return this.victoryPeople;
+        }
+        loopCardNumber(users);
+        if (!numCompare) {
+            return this.victoryPeople;
+        }
+        loopSuitNumber(users);
+        return this.victoryPeople;
+    }
+
+    public void compareBoolean(int num, int valueInt, boolean valueBoolean) {
+        this.suitNum = valueInt;
+        if (num == 0) {
+            this.rankCompare = valueBoolean;
+        } else if (num == 1) {
+            this.numCompare = valueBoolean;
+        }
+    }
+
 }
