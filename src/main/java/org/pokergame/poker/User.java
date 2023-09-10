@@ -7,18 +7,13 @@ import java.util.List;
 public class User {
     private List<Card> handCard = new ArrayList<>();
     private CardSetting cardSetting = new CardSetting();
-    private Rank rank;
+    private Rank rank = Rank.NOPAIR;
     private List<Card> rankCard = new ArrayList<>();
 
-
-    public User() {
-        this.rank = Rank.NOPAIR;
-    }
 
     public Rank getRank() {
         return rank;
     }
-
 
     public List<Card> getRankCard() {
         return rankCard;
@@ -36,32 +31,44 @@ public class User {
 
     @Override
     public String toString() {
-        return "handCard=" + handCard +
-                ", rank=" + rank + "\n";
+        return "주어진 패: " + handCard +
+                "\n";
     }
 
-    public void rankCheck() {
-        for (int i = 0; i < handCard.size() - 1; i++) {
-            if (handCard.get(i).getCardNumber() == handCard.get(i + 1).getCardNumber() && this.rank == Rank.NOPAIR) {
+    public void rankCheck(int player) {
+        int straight = 0;
+        int end = handCard.get(handCard.size() - 1).getValue();
+        for (int i = 0; i <= handCard.size() - 1; i++) {
+            if (i < handCard.size() - 1 && handCard.get(i).getValue() == handCard.get(i + 1).getValue() && this.rank == Rank.NOPAIR) {
                 this.rank = Rank.ONEPAIR;
                 this.rankCard.add(handCard.get(i));
                 this.rankCard.add(handCard.get(i + 1));
-            } else if (this.rank == Rank.ONEPAIR && handCard.get(i).getCardNumber() == handCard.get(i + 1).getCardNumber() && handCard.get(i).getCardNumber() == handCard.get(i - 1).getCardNumber()) {
+            } else if (i < handCard.size() - 1 && this.rank == Rank.ONEPAIR && handCard.get(i).getValue() == handCard.get(i + 1).getValue() && handCard.get(i).getValue() == handCard.get(i - 1).getValue()) {
                 this.rank = Rank.TRIPLE;
                 this.rankCard.add(handCard.get(i + 1));
-            } else if (this.rank == Rank.ONEPAIR && i > 0 && handCard.get(i).getCardNumber() == handCard.get(i + 1).getCardNumber() && handCard.get(i).getCardNumber() != handCard.get(i - 1).getCardNumber()) {
+            } else if (i < handCard.size() - 1 && this.rank == Rank.ONEPAIR && i > 0 && handCard.get(i).getValue() == handCard.get(i + 1).getValue() && handCard.get(i).getValue() != handCard.get(i - 1).getValue()) {
                 this.rank = Rank.TWOPAIR;
                 this.rankCard.add(handCard.get(i));
                 this.rankCard.add(handCard.get(i + 1));
+            } else if (end == 14 || (handCard.get(0).getValue() + i) <= 14 && handCard.get(i).getValue() == (handCard.get(0).getValue() + i)) {
+                straight++;
             }
+
         }
-        if (this.rank == Rank.NOPAIR) {
+        if (straight == 5) {
+            this.rank = Rank.STRAIGHT;
+            if (handCard.get(0).getValue() == 2) {
+                this.rank = Rank.BACKSTRAIGHT;
+            } else if (handCard.get(0).getValue() == 10) {
+                this.rank = Rank.MOUNTAIE;
+            }
+            for (int i = 0; i < handCard.size(); i++) {
+                this.rankCard.add(handCard.get(i));
+            }
+        } else if (this.rank == Rank.NOPAIR) {
             this.rankCard.add(handCard.get(handCard.size() - 1));
         }
 
-        System.out.println(this.rank);
-        System.out.println("-----\n");
-        System.out.println(this.rankCard + "\n");
     }
 
 

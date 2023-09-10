@@ -25,52 +25,64 @@ public class Rule<T> {
     public String toString() {
         return "" + table;
     }
-    
-    public int compare(int compareNum1, int compareNum2, int compareNum3, int idx, int self, int num) {
-        if (this.rankNum == compareNum1 && cardNum == compareNum2 && suitNum < compareNum3) {
+
+    public int getVictoryPeople() {
+        return victoryPeople;
+    }
+
+    public int compare(int compareNum1, int compareNum2, int compareNum3, int highPlayer, int selfPlayer, int num) {
+        if (this.rankNum == compareNum1 && this.cardNum == compareNum2 && this.suitNum < compareNum3) {
             compareBoolean(num, compareNum3, false);
-            return idx;
+            return highPlayer;
         } else if (this.suitNum == compareNum3) {
             compareBoolean(num, this.suitNum, true);
         }
-        return self;
+        return selfPlayer;
     }
 
     public void loopRank(User[] users) {
         for (int i = 0; i < users.length; i++) { // parameter rank
-            this.victoryPeople = compare(rankNum, cardNum, users[i].getRank().getRank(), i, this.victoryPeople, 0);
+            this.victoryPeople = compare(this.rankNum, this.cardNum, users[i].getRank().getRank(), i, this.victoryPeople, 0);
         }
+
         this.rankNum = this.suitNum;
         this.suitNum = Suit.C.getNumber();
     }
 
     public void loopCardNumber(User[] users) {
         for (int i = 0; i < users.length; i++) { // parameter rank
-            this.victoryPeople = compare(users[i].getRank().getRank(), this.cardNum,
-                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber(), i, this.victoryPeople, 1);
+            if (this.rankNum == 4) {
+                this.victoryPeople = compare(users[i].getRank().getRank(), this.cardNum,
+                        users[i].getRankCard().get(0).getValue(), i, this.victoryPeople, 1);
+            } else {
+                this.victoryPeople = compare(users[i].getRank().getRank(), this.cardNum,
+                        users[i].getRankCard().get(users[i].getRankCard().size() - 1).getValue(), i, this.victoryPeople, 1);
+            }
         }
+
         this.cardNum = this.suitNum;
         this.suitNum = Suit.C.getNumber();
     }
 
+
     public void loopSuitNumber(User[] users) {
         for (int i = 0; i < users.length; i++) { // parameter rank
             this.victoryPeople = compare(users[i].getRank().getRank(),
-                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getCardNumber(), users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber(), i, this.victoryPeople, 2);
+                    users[i].getRankCard().get(users[i].getRankCard().size() - 1).getValue(), users[i].getRankCard().get(users[i].getRankCard().size() - 1).getSuit().getNumber(), i, this.victoryPeople, 2);
         }
     }
 
-    public int victory(User[] users) {
+    public void victory(User[] users) {
         loopRank(users);
         if (!rankCompare) {
-            return this.victoryPeople;
+            return;
         }
         loopCardNumber(users);
         if (!numCompare) {
-            return this.victoryPeople;
+            return;
         }
         loopSuitNumber(users);
-        return this.victoryPeople;
+
     }
 
     public void compareBoolean(int num, int valueInt, boolean valueBoolean) {
@@ -79,6 +91,8 @@ public class Rule<T> {
             this.rankCompare = valueBoolean;
         } else if (num == 1) {
             this.numCompare = valueBoolean;
+        } else if (num > 2) {
+            throw new IllegalArgumentException("해당하는 규칙은 없습니다.");
         }
     }
 

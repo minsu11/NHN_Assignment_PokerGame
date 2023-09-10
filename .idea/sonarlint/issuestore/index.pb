@@ -17,11 +17,13 @@ f
 6src/test/java/org/pokergame/poker/ShuffleCardTest.java,2/e/2e3c539d7429d4e832fad91e0682867dc023d355
 b
 2src/main/java/org/pokergame/poker/CardSetting.java,8/1/818cdb55f9e26924f577abd0206b7722c3ce5091
-`
-0src/main/java/org/pokergame/poker/TableUser.java,1/0/105a89ef4bf37ee8ac303ba87d74ae24450b8e8c
 ]
 -src/main/java/org/pokergame/poker/Dealer.java,8/6/868d24288c810572f85b370addfc230820e398f8
 [
 +src/main/java/org/pokergame/poker/Game.java,d/8/d8b75645bd0e44c3d05faff5594126718fb4666b
 [
 +src/main/java/org/pokergame/poker/Rule.java,5/7/57ac3438adb3a9d6ede95ea8b1d3121c2c5375ea
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+T
+$src/main/java/org/pokergame/Todo.txt,2/9/29b98dc71613f871bbe4759fdf060bc09b40ca63

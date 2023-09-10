@@ -15,11 +15,14 @@ public class CardSetting {
         fillCard(Suit.C);
 
         Collections.shuffle(cardList);
+
+
     }
 
     public void fillCard(Suit suit) {
-        for (int i = 1; i < 14; i++) {
-            cardList.add(new Card(suit, i));
+        cardList.add(new Card(suit, 1, 14));
+        for (int i = 2; i < 14; i++) {
+            cardList.add(new Card(suit, i, i));
         }
     }
 

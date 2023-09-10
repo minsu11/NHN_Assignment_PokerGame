@@ -7,24 +7,23 @@ import org.pokergame.poker.Game;
  */
 public class Main {
     public static void main(String[] args) {
-        for (int k = 0; k < 100; k++) {
-            Game game = new Game(4);
-            game.start();
-            for (int i = 0; i < 4; i++) {
-                System.out.println(game.getRule().getTable().getUser(i));
-            }
+        try {
+            gameStart();
 
-            System.out.println("\n\n");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
-//        User user = new User();
-//        Dealer dealer = new Dealer();
-//        CardSetting cardSetting = new CardSetting();
-//        cardSetting.cardSetting();
-//        for (int i = 0; i < 3; i++) {
-//            dealer.handingOutCard(user);
-//
+    }
+
+    public static void gameStart() {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("포커 게임을 시작합니다.");
+//        System.out.printf("인원 수를 정하세요(2인 ~ 4인) : ");
+//        int people = scanner.nextInt();
+//        if (people < 2 && people > 4) {
+//            throw new IllegalArgumentException("플레이어 수를 잘못 입력하셨습니다.");
 //        }
-//        user.rankCheck();
-//        System.out.println(user);
+        Game game = new Game(2);
+        game.start();
     }
 }

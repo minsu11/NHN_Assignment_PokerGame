@@ -1,4 +1,7 @@
 
-¢
-java:S1862 "„This branch can not be reached because the condition duplicates a previous condition in the same sequence of "if/else if" statements(à­ÅÔ8ı²šÀ§1
-L	java:S106$"+Replace this use of System.out by a logger.(Ãçıûÿÿÿÿ8”›šÀ§1
+t
+java:S3776&"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(´§¿ûÿÿÿÿ8ŒÒ¦ù§1
+O
+java:S1172&"-Remove this unused method parameter "player".(´§¿ûÿÿÿÿ8ŒÒ¦ù§1
+L
+java:S1068	"/Remove this unused "cardSetting" private field.(Ê³”·8Ò¦ù§1

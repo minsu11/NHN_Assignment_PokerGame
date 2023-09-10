@@ -9,7 +9,7 @@ public class Table {
 
     public void userRank() {
         for (int i = 0; i < users.length; i++) {
-            users[i].rankCheck();
+            users[i].rankCheck(i + 1);
         }
     }
 
@@ -23,6 +23,9 @@ public class Table {
     }
 
     public void createUser(int people) {
+        if (people < 0) {
+            throw new IllegalArgumentException("플레이어 수가 0보다 작습니다.");
+        }
         this.users = new User[people];
         for (int i = 0; i < people; i++) {
             this.users[i] = new User(); // 각 개인의 user 생성

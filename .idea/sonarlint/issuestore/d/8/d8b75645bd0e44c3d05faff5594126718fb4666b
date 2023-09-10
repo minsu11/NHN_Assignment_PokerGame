@@ -1,3 +1,14 @@
 
-G	java:S106"+Replace this use of System.out by a logger.(ƒêœ¹8³’˜ §1
-L	java:S106"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8Şï À§1
+L
+java:S3740"/Provide the parametrized type for this generic.(¸‡ËÒ8Êšíø§1
+L
+java:S3740"/Provide the parametrized type for this generic.(éÌÉ¶8Êšíø§1
+Q
+java:S3740 "/Provide the parametrized type for this generic.(“¯÷Üûÿÿÿÿ8Êšíø§1
+G	java:S106"+Replace this use of System.out by a logger.(à¼‹§8Íšíø§1
+L	java:S106"+Replace this use of System.out by a logger.(ÕÇÕûÿÿÿÿ8Îšíø§1
+L	java:S106"+Replace this use of System.out by a logger.(Ş¤ Óùÿÿÿÿ8Îšíø§1
+G	java:S106"+Replace this use of System.out by a logger.(²Ü¤Î8Îšíø§1
+L	java:S106"+Replace this use of System.out by a logger.(ÕÇÕûÿÿÿÿ8¼“îø§1
+L	java:S106"+Replace this use of System.out by a logger.(¢´…òùÿÿÿÿ8¶»ñø§1
+L	java:S106"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8³Ğ÷ø§1
